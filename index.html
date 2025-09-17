@@ -249,7 +249,17 @@
       border: 1px solid rgba(255, 255, 255, 0.6);
       margin-bottom: 2rem;
       backdrop-filter: blur(10px);
-      display: none;
+    }
+    
+    .form-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      text-align: center;
+      color: var(--gray);
+      font-size: 1.2rem;
+      font-weight: 500;
     }
     
     .form-label {
@@ -627,89 +637,94 @@
     </section>
 
     <!-- Form -->
-    <section class="form-container" id="offerForm">
-      <div class="row">
-        <!-- Left Column: Form Fields -->
-        <div class="col-md-6">
-          <div class="mb-4">
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" id="firstName" class="form-control" placeholder="Enter first name">
-          </div>
-          <div class="mb-4">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" id="lastName" class="form-control" placeholder="Enter last name">
-          </div>
-          <div class="mb-4">
-            <label for="registration" class="form-label">Registration</label>
-            <input type="text" id="registration" class="form-control" placeholder="Enter registration number">
-          </div>
-          <div class="mb-4">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" class="form-control" placeholder="Enter email address">
-          </div>
-          <div class="mb-4">
-            <label class="form-label">Offer Dates</label>
-            <div class="date-inputs">
-              <input type="date" id="startDate" class="form-control" placeholder="Start Date">
-              <span class="date-separator">to</span>
-              <input type="date" id="endDate" class="form-control" placeholder="End Date">
+    <section class="form-container" id="formContainer">
+      <div id="formPlaceholder" class="form-placeholder">
+        Please select an offer type to create an offer
+      </div>
+      <div id="offerForm" style="display: none;">
+        <div class="row">
+          <!-- Left Column: Form Fields -->
+          <div class="col-md-6">
+            <div class="mb-4">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="Enter first name">
             </div>
-          </div>
-          <input type="hidden" id="offerType" name="offerType" value="">
-        </div>
-        
-        <!-- Right Column: Message and Options -->
-        <div class="col-md-6">
-          <div class="mb-4">
-            <label for="message" class="form-label">Personalised SMS Message</label>
-            <textarea id="message" rows="4" maxlength="160" class="form-control" placeholder="Enter your message here"></textarea>
-            <div id="smsCharCount" class="char-count">0/160 characters</div>
-          </div>
-          
-          <div class="mb-4">
-            <label class="form-label">Message Preview</label>
-            <div class="preview-box">
-              <div class="preview-title">Selected Offer: <strong id="selectedOffer">None</strong></div>
-              <div class="preview-content">
-                <p id="previewSMS" class="mb-2">SMS: Your message will appear here...</p>
-                <p id="previewEmail" class="mb-2 d-none">Email: -</p>
-                <p id="previewDelivery" class="mb-0 text-muted small">Delivery: SMS, Email (same message)</p>
+            <div class="mb-4">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" id="lastName" class="form-control" placeholder="Enter last name">
+            </div>
+            <div class="mb-4">
+              <label for="registration" class="form-label">Registration</label>
+              <input type="text" id="registration" class="form-control" placeholder="Enter registration number">
+            </div>
+            <div class="mb-4">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" placeholder="Enter email address">
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Offer Dates</label>
+              <div class="date-inputs">
+                <input type="date" id="startDate" class="form-control" placeholder="Start Date">
+                <span class="date-separator">to</span>
+                <input type="date" id="endDate" class="form-control" placeholder="End Date">
               </div>
             </div>
+            <input type="hidden" id="offerType" name="offerType" value="">
           </div>
           
-          <div class="mb-4">
-            <label class="form-label">Delivery Options</label>
-            <div class="delivery-options">
-              <button id="smsOption" class="delivery-btn selected" title="Send via SMS">
-                <i class="fas fa-sms"></i>
-              </button>
-              <button id="emailOption" class="delivery-btn selected" title="Send via Email">
-                <i class="fas fa-envelope"></i>
-              </button>
+          <!-- Right Column: Message and Options -->
+          <div class="col-md-6">
+            <div class="mb-4">
+              <label for="message" class="form-label">Personalised SMS Message</label>
+              <textarea id="message" rows="4" maxlength="160" class="form-control" placeholder="Enter your message here"></textarea>
+              <div id="smsCharCount" class="char-count">0/160 characters</div>
             </div>
             
-            <div class="form-check mt-3">
-              <input class="form-check-input" type="checkbox" id="sameMessage" checked>
-              <label class="form-check-label" for="sameMessage">Use the same message for email</label>
+            <div class="mb-4">
+              <label class="form-label">Message Preview</label>
+              <div class="preview-box">
+                <div class="preview-title">Selected Offer: <strong id="selectedOffer">None</strong></div>
+                <div class="preview-content">
+                  <p id="previewSMS" class="mb-2">SMS: Your message will appear here...</p>
+                  <p id="previewEmail" class="mb-2 d-none">Email: -</p>
+                  <p id="previewDelivery" class="mb-0 text-muted small">No delivery selected</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label">Delivery Options</label>
+              <div class="delivery-options">
+                <button id="smsOption" class="delivery-btn" title="Send via SMS">
+                  <i class="fas fa-sms"></i>
+                </button>
+                <button id="emailOption" class="delivery-btn" title="Send via Email">
+                  <i class="fas fa-envelope"></i>
+                </button>
+              </div>
+              
+              <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="sameMessage" disabled checked>
+                <label class="form-check-label" for="sameMessage">Use the same message for email</label>
+              </div>
+            </div>
+            
+            <div id="otherWordingContainer" class="mb-4 d-none">
+              <label for="otherWording" class="form-label">Email Message</label>
+              <textarea id="otherWording" rows="2" maxlength="160" class="form-control" placeholder="Enter email message"></textarea>
+              <div id="emailCharCount" class="char-count">0/160 characters</div>
             </div>
           </div>
-          
-          <div id="otherWordingContainer" class="mb-4 d-none">
-            <label for="otherWording" class="form-label">Email Message</label>
-            <textarea id="otherWording" rows="2" maxlength="160" class="form-control" placeholder="Enter email message"></textarea>
-            <div id="emailCharCount" class="char-count">0/160 characters</div>
-          </div>
         </div>
-      </div>
-      
-      <div class="action-buttons">
-        <button id="previewButton" class="btn btn-primary" disabled>
-          <i class="fas fa-eye me-1"></i> Preview Offer
-        </button>
-        <button id="sendButton" class="btn btn-success" disabled>
-          <i class="fas fa-paper-plane me-1"></i> Send Offer
-        </button>
+        
+        <div class="action-buttons">
+          <button id="previewButton" class="btn btn-primary" disabled>
+            <i class="fas fa-eye me-1"></i> Preview Offer
+          </button>
+          <button id="sendButton" class="btn btn-success" disabled>
+            <i class="fas fa-paper-plane me-1"></i> Send Offer
+          </button>
+        </div>
       </div>
     </section>
 
@@ -770,7 +785,9 @@
     const previewButton = document.getElementById('previewButton');
     const sendButton = document.getElementById('sendButton');
     const createOfferButton = document.getElementById('createOfferButton');
+    const formContainer = document.getElementById('formContainer');
     const offerForm = document.getElementById('offerForm');
+    const formPlaceholder = document.getElementById('formPlaceholder');
     const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
     const modalContent = document.getElementById('modalContent');
 
@@ -788,6 +805,7 @@
     // Create Offer button click event
     createOfferButton.addEventListener('click', () => {
       if (!createOfferButton.disabled) {
+        formPlaceholder.style.display = 'none';
         offerForm.style.display = 'block';
         // Clear message fields
         messageInput.value = '';
@@ -801,6 +819,7 @@
     // Toggle delivery option selection
     smsOption.addEventListener('click', () => {
       smsOption.classList.toggle('selected');
+      sameMessageCheckbox.disabled = !emailOption.classList.contains('selected');
       updatePreview();
     });
     
