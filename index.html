@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Voucher Offers | Dealer Portal</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #dbeafe;
+      --secondary: #10b981;
+      --accent: #f43f5e;
+      --accent-purple: #a855f7;
+      --accent-orange: #f97316;
+      --accent-amber: #f59e0b;
+      --dark: #1f2937;
+      --light: #f9fafb;
+      --gray: #9ca3af;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #c7eeff 0%, #ffd6e7 25%, #c0f3e6 50%, #ffdfb8 75%, #d9deff 100%);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .container {
+      max-width: 1200px;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      margin-bottom: 2rem;
+    }
+    
+    .dealer-logo {
+      background: linear-gradient(135deg, var(--primary-light) 0%, #e0f7fa 100%);
+      border-radius: 10px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+    }
+    
+    h1 {
+      font-weight: 800;
+      color: var(--dark);
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    h2 {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.75rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+      border-radius: 2px;
+    }
+    
+    /* Voucher Cards */
+    .voucher-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .voucher-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius);
+      padding: 1.75rem 1rem;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .voucher-card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+      opacity: 0.7;
+      transition: var(--transition);
+    }
+    
+    .voucher-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .voucher-card:hover:before {
+      height: 8px;
+      opacity: 1;
+    }
+    
+    .voucher-card.selected {
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+      transform: translateY(-5px);
+    }
+    
+    .voucher-icon {
+      font-size: 2.75rem;
+      margin-bottom: 0.75rem;
+      transition: var(--transition);
+    }
+    
+    .voucher-card:nth-child(1) .voucher-icon { 
+      color: #10b981;
+      background: linear-gradient(135deg, #10b981, #059669);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .voucher-card:nth-child(2) .voucher-icon { 
+      color: #f43f5e;
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .voucher-card:nth-child(3) .voucher-icon { 
+      color: #3b82f6;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .voucher-card:nth-child(4) .voucher-icon { 
+      color: #ec4899;
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .voucher-card:nth-child(5) .voucher-icon { 
+      color: #6366f1;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .voucher-card.selected:nth-child(1) { 
+      background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    }
+    .voucher-card.selected:nth-child(2) { 
+      background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+    }
+    .voucher-card.selected:nth-child(3) { 
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    }
+    .voucher-card.selected:nth-child(4) { 
+      background: linear-gradient(135deg, #fdf4ff, #fae8ff);
+    }
+    .voucher-card.selected:nth-child(5) { 
+      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    }
+    
+    /* Form Styles */
+    .form-container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+    }
+    
+    .form-label {
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+      font-size: 1.05rem;
+    }
+    
+    .form-control {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.875rem 1.25rem;
+      transition: var(--transition);
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+      background: rgba(255, 255, 255, 1);
+    }
+    
+    .date-inputs {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .date-separator {
+      color: var(--gray);
+      font-weight: 600;
+    }
+    
+    /* Message Preview */
+    .preview-box {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      min-height: 200px;
+      max-height: 240px;
+      overflow-y: auto;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .preview-title {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    .preview-content {
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    /* Delivery Options */
+    .delivery-options {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .delivery-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      transition: var(--transition);
+      font-size: 1.75rem;
+      color: var(--dark);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .delivery-btn.selected {
+      background: linear-gradient(135deg, var(--primary-light), #e0f2fe);
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2), var(--shadow-md);
+    }
+    
+    .delivery-btn:hover:not(.selected) {
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    /* Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: var(--transition);
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 1.1rem;
+      box-shadow: var(--shadow-md);
+      border: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #1d4ed8);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px -1px rgba(37, 99, 235, 0.4);
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, var(--secondary), #059669);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px -1px rgba(16, 185, 129, 0.4);
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Modal Styles */
+    .modal-content {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    
+    .modal-header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    }
+    
+    .modal-title {
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 1.5rem;
+    }
+    
+    .modal-body {
+      padding: 2rem;
+    }
+    
+    .modal-footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    }
+    
+    .preview-card {
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .sms-preview {
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+      border-left: 5px solid var(--primary);
+    }
+    
+    .email-preview {
+      background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+      border-left: 5px solid var(--secondary);
+    }
+    
+    .preview-card-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      color: var(--dark);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.25rem;
+      }
+      
+      .voucher-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1.25rem;
+      }
+      
+      .voucher-card {
+        padding: 1.25rem 0.75rem;
+        min-height: 140px;
+      }
+      
+      .voucher-icon {
+        font-size: 2.25rem;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .date-inputs {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .date-separator {
+        display: none;
+      }
+      
+      .form-container {
+        padding: 1.75rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .form-container {
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .delivery-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+      
+      .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+      }
+    }
+    
+    /* Custom checkbox */
+    .form-check-input {
+      width: 1.25em;
+      height: 1.25em;
+      margin-top: 0.15em;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .form-check-input:checked {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    
+    .form-check-input:focus {
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    }
+    
+    .form-check-label {
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 1.05rem;
+    }
+    
+    /* Character count */
+    .char-count {
+      font-size: 0.9rem;
+      color: var(--gray);
+      text-align: right;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .char-count.warning {
+      color: #f59e0b;
+    }
+    
+    .char-count.danger {
+      color: #ef4444;
+    }
+    
+    /* Decorative elements */
+    .floating-icon {
+      position: absolute;
+      opacity: 0.03;
+      z-index: -1;
+      font-size: 20rem;
+    }
+    
+    .floating-icon-1 {
+      top: 5%;
+      right: 5%;
+      color: var(--primary);
+    }
+    
+    .floating-icon-2 {
+      bottom: 10%;
+      left: 5%;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <i class="fas fa-gift floating-icon floating-icon-1"></i>
+  <i class="fas fa-tags floating-icon floating-icon-2"></i>
+  
+  <div class="container">
+    <!-- Header -->
+    <header class="header d-flex justify-content-between align-items-center">
+      <h1>Customised Offers</h1>
+      <div class="dealer-logo">
+        <span>Dealer Logo</span>
+      </div>
+    </header>
+
+    <!-- Offer Types -->
+    <section class="mb-5">
+      <h2>Select Promotional Offer</h2>
+      <div class="voucher-grid">
+        <div class="voucher-card" data-offer="accessories">
+          <i class="fas fa-car-side voucher-icon"></i>
+          <p class="card-text fw-semibold mb-0">Accessories</p>
+        </div>
+        <div class="voucher-card" data-offer="finance">
+          <i class="fas fa-money-bill voucher-icon"></i>
+          <p class="card-text fw-semibold mb-0">Finance</p>
+        </div>
+        <div class="voucher-card" data-offer="carwash">
+          <i class="fas fa-soap voucher-icon"></i>
+          <p class="card-text fw-semibold mb-0">Car Wash</p>
+        </div>
+        <div class="voucher-card" data-offer="servicing">
+          <i class="fas fa-wrench voucher-icon"></i>
+          <p class="card-text fw-semibold mb-0">Servicing</p>
+        </div>
+        <div class="voucher-card" data-offer="custom">
+          <i class="fas fa-star voucher-icon"></i>
+          <p class="card-text fw-semibold mb-0">Create Offer</p>
+        </div>
+      </div>
+      <p class="text-muted mt-3">Click an offer to select it for promotion</p>
+    </section>
+
+    <!-- Form -->
+    <section class="form-container">
+      <div class="row">
+        <!-- Left Column: Form Fields -->
+        <div class="col-md-6">
+          <div class="mb-4">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" id="firstName" class="form-control" placeholder="Enter first name">
+          </div>
+          <div class="mb-4">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" id="lastName" class="form-control" placeholder="Enter last name">
+          </div>
+          <div class="mb-4">
+            <label for="registration" class="form-label">Registration</label>
+            <input type="text" id="registration" class="form-control" placeholder="Enter registration number">
+          </div>
+          <div class="mb-4">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter email address">
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Offer Dates</label>
+            <div class="date-inputs">
+              <input type="date" id="startDate" class="form-control" placeholder="Start Date">
+              <span class="date-separator">to</span>
+              <input type="date" id="endDate" class="form-control" placeholder="End Date">
+            </div>
+          </div>
+          <input type="hidden" id="offerType" name="offerType" value="">
+        </div>
+        
+        <!-- Right Column: Message and Options -->
+        <div class="col-md-6">
+          <div class="mb-4">
+            <label for="message" class="form-label">Personalised SMS Message</label>
+            <textarea id="message" rows="4" maxlength="160" class="form-control" placeholder="Enter your message here"></textarea>
+            <div id="smsCharCount" class="char-count">0/160 characters</div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label">Message Preview</label>
+            <div class="preview-box">
+              <div class="preview-title">Selected Offer: <strong id="selectedOffer">None</strong></div>
+              <div class="preview-content">
+                <p id="previewSMS" class="mb-2">SMS: Your message will appear here...</p>
+                <p id="previewEmail" class="mb-2 d-none">Email: -</p>
+                <p id="previewDelivery" class="mb-0 text-muted small">Delivery: SMS, Email (same message)</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label">Delivery Options</label>
+            <div class="delivery-options">
+              <button id="smsOption" class="delivery-btn selected" title="Send via SMS">
+                <i class="fas fa-sms"></i>
+              </button>
+              <button id="emailOption" class="delivery-btn selected" title="Send via Email">
+                <i class="fas fa-envelope"></i>
+              </button>
+            </div>
+            
+            <div class="form-check mt-3">
+              <input class="form-check-input" type="checkbox" id="sameMessage" checked>
+              <label class="form-check-label" for="sameMessage">Use the same message for email</label>
+            </div>
+          </div>
+          
+          <div id="otherWordingContainer" class="mb-4 d-none">
+            <label for="otherWording" class="form-label">Email Message</label>
+            <textarea id="otherWording" rows="2" maxlength="160" class="form-control" placeholder="Enter email message"></textarea>
+            <div id="emailCharCount" class="char-count">0/160 characters</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="previewButton" class="btn btn-primary" disabled>
+          <i class="fas fa-eye me-1"></i> Preview Offer
+        </button>
+        <button id="sendButton" class="btn btn-success" disabled>
+          <i class="fas fa-paper-plane me-1"></i> Send Offer
+        </button>
+      </div>
+    </section>
+
+    <!-- Modal for Preview Offer -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Offer Preview</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="modalContent"></div>
+          <div class="modal-footer">
+            <button id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  
+  <script>
+    // Function to format date as "15 MAY, 2025"
+    function formatDate(dateStr) {
+      if (!dateStr || dateStr === 'N/A') return 'N/A';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      }).toUpperCase().replace(/ /g, ' ');
+    }
+
+    // Select form elements
+    const voucherCards = document.querySelectorAll('.voucher-card');
+    const offerTypeInput = document.getElementById('offerType');
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const registrationInput = document.getElementById('registration');
+    const emailInput = document.getElementById('email');
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const messageInput = document.getElementById('message');
+    const smsCharCount = document.getElementById('smsCharCount');
+    const otherWordingInput = document.getElementById('otherWording');
+    const emailCharCount = document.getElementById('emailCharCount');
+    const otherWordingContainer = document.getElementById('otherWordingContainer');
+    const sameMessageCheckbox = document.getElementById('sameMessage');
+    const smsOption = document.getElementById('smsOption');
+    const emailOption = document.getElementById('emailOption');
+    const selectedOffer = document.getElementById('selectedOffer');
+    const previewSMS = document.getElementById('previewSMS');
+    const previewEmail = document.getElementById('previewEmail');
+    const previewDelivery = document.getElementById('previewDelivery');
+    const previewButton = document.getElementById('previewButton');
+    const sendButton = document.getElementById('sendButton');
+    const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+    const modalContent = document.getElementById('modalContent');
+
+    // Add click event listeners to voucher cards
+    voucherCards.forEach(card => {
+      card.addEventListener('click', () => {
+        voucherCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        offerTypeInput.value = card.getAttribute('data-offer');
+        updatePreview();
+      });
+    });
+
+    // Toggle delivery option selection
+    smsOption.addEventListener('click', () => {
+      smsOption.classList.toggle('selected');
+      updatePreview();
+    });
+    
+    emailOption.addEventListener('click', () => {
+      emailOption.classList.toggle('selected');
+      sameMessageCheckbox.disabled = !emailOption.classList.contains('selected');
+      
+      if (!emailOption.classList.contains('selected')) {
+        sameMessageCheckbox.checked = true;
+        otherWordingContainer.classList.add('d-none');
+      }
+      
+      updatePreview();
+    });
+
+    // Toggle other wording visibility
+    sameMessageCheckbox.addEventListener('change', () => {
+      otherWordingContainer.classList.toggle('d-none', sameMessageCheckbox.checked);
+      updatePreview();
+    });
+
+    // Update character count for SMS
+    messageInput.addEventListener('input', () => {
+      const length = messageInput.value.length;
+      smsCharCount.textContent = `${length}/160 characters`;
+      
+      if (length > 140) {
+        smsCharCount.classList.add('warning');
+        smsCharCount.classList.remove('danger');
+      } else if (length > 155) {
+        smsCharCount.classList.remove('warning');
+        smsCharCount.classList.add('danger');
+      } else {
+        smsCharCount.classList.remove('warning', 'danger');
+      }
+      
+      updatePreview();
+    });
+
+    // Update character count for email
+    otherWordingInput.addEventListener('input', () => {
+      const length = otherWordingInput.value.length;
+      emailCharCount.textContent = `${length}/160 characters`;
+      updatePreview();
+    });
+
+    // Update preview in real-time
+    function updatePreview() {
+      const offer = offerTypeInput.value ? (offerTypeInput.value.charAt(0).toUpperCase() + offerTypeInput.value.slice(1)) : 'None';
+      const smsMessage = messageInput.value || 'Your message will appear here...';
+      const emailMessage = sameMessageCheckbox.checked || !emailOption.classList.contains('selected') ? smsMessage : (otherWordingInput.value || 'No email message provided');
+      const delivery = [];
+      
+      if (smsOption.classList.contains('selected')) delivery.push('SMS');
+      if (emailOption.classList.contains('selected')) {
+        delivery.push(sameMessageCheckbox.checked ? 'Email (same message)' : 'Email (different message)');
+      }
+      
+      const deliveryText = delivery.length ? `Delivery: ${delivery.join(', ')}` : 'No delivery selected';
+
+      // Update preview section
+      selectedOffer.textContent = offer;
+      previewSMS.textContent = `SMS: ${smsMessage}`;
+      
+      if (!sameMessageCheckbox.checked && emailOption.classList.contains('selected')) {
+        previewEmail.textContent = `Email: ${emailMessage}`;
+        previewEmail.classList.remove('d-none');
+      } else {
+        previewEmail.classList.add('d-none');
+      }
+      
+      previewDelivery.textContent = deliveryText;
+
+      // Enable/disable buttons
+      const hasDelivery = smsOption.classList.contains('selected') || emailOption.classList.contains('selected');
+      const hasMessage = messageInput.value.trim().length > 0;
+      const hasOffer = offerTypeInput.value !== '';
+      
+      previewButton.disabled = !hasDelivery || !hasMessage || !hasOffer;
+      sendButton.disabled = !hasDelivery || !hasOffer;
+    }
+
+    // Preview button to show modal
+    previewButton.addEventListener('click', () => {
+      if (!previewButton.disabled) {
+        const offer = offerTypeInput.value.charAt(0).toUpperCase() + offerTypeInput.value.slice(1);
+        const firstName = firstNameInput.value || 'Customer';
+        const lastName = lastNameInput.value || '';
+        const registration = registrationInput.value || 'N/A';
+        const startDate = formatDate(startDateInput.value);
+        const endDate = formatDate(endDateInput.value);
+        const smsMessage = messageInput.value || 'Your message will appear here...';
+        const emailMessage = sameMessageCheckbox.checked || !emailOption.classList.contains('selected') ? smsMessage : (otherWordingInput.value || 'No email message provided');
+        let modalHtml = '';
+
+        if (smsOption.classList.contains('selected')) {
+          modalHtml += `
+            <div class="preview-card sms-preview">
+              <div class="preview-card-title">SMS Preview</div>
+              <p class="mb-2">${smsMessage}</p>
+              <p class="text-muted small mb-0">Offer: ${offer} | Valid from ${startDate} to ${endDate} | Registration: ${registration}</p>
+            </div>
+          `;
+        }
+        
+        if (emailOption.classList.contains('selected')) {
+          modalHtml += `
+            <div class="preview-card email-preview">
+              <div class="preview-card-title">Email Preview</div>
+              <p class="mb-1"><strong>To:</strong> ${firstName} ${lastName} &lt;${emailInput.value || 'customer@example.com'}&gt;</p>
+              <p class="mb-2"><strong>Subject:</strong> Special Offer - ${offer}</p>
+              <hr class="my-2">
+              <p class="mb-2">${emailMessage}</p>
+              <p class="mb-1"><strong>Offer:</strong> ${offer}</p>
+              <p class="mb-1"><strong>Validity:</strong> ${startDate} to ${endDate}</p>
+              <p class="mb-3"><strong>Vehicle Registration:</strong> ${registration}</p>
+              <p class="text-muted mb-0"><em>Best regards,<br>Dealer Team</em></p>
+            </div>
+          `;
+        }
+        
+        modalContent.innerHTML = modalHtml || '<p class="text-dark">No delivery method selected.</p>';
+        previewModal.show();
+      }
+    });
+
+    // Update preview on input
+    [firstNameInput, lastNameInput, registrationInput, emailInput, startDateInput, endDateInput].forEach(input => {
+      input.addEventListener('input', updatePreview);
+    });
+
+    // Initialize with no default selection
+    updatePreview();
+  </script>
+</body>
+</html>
