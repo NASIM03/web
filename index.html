@@ -113,7 +113,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 1.5rem;
-      margin-bottom: 2.5rem;
+      flex: 1;
     }
     
     .voucher-card {
@@ -192,12 +192,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .voucher-card:nth-child(5) .voucher-icon { 
-      color: #6366f1;
-      background: linear-gradient(135deg, #6366f1, #4f46e5);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
     
     .voucher-card.selected:nth-child(1) { 
       background: linear-gradient(135deg, #ecfdf5, #d1fae5);
@@ -211,8 +205,39 @@
     .voucher-card.selected:nth-child(4) { 
       background: linear-gradient(135deg, #fdf4ff, #fae8ff);
     }
-    .voucher-card.selected:nth-child(5) { 
-      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    
+    /* Create Offer Button */
+    .create-offer-btn {
+      background: linear-gradient(135deg, var(--primary), #1d4ed8);
+      color: white;
+      padding: 0.875rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      border: none;
+      align-self: center;
+      margin-left: 1.5rem;
+      min-width: 180px;
+    }
+    
+    .create-offer-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px -1px rgba(37, 99, 235, 0.4);
+    }
+    
+    .create-offer-btn:disabled {
+      opacity: 0.6;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Offer Selection Layout */
+    .offer-selection {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
     }
     
     /* Form Styles */
@@ -224,6 +249,7 @@
       border: 1px solid rgba(255, 255, 255, 0.6);
       margin-bottom: 2rem;
       backdrop-filter: blur(10px);
+      display: none;
     }
     
     .form-label {
@@ -460,6 +486,16 @@
       .form-container {
         padding: 1.75rem;
       }
+      
+      .offer-selection {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .create-offer-btn {
+        margin-left: 0;
+        margin-top: 1.5rem;
+      }
     }
     
     @media (max-width: 576px) {
@@ -566,33 +602,32 @@
     <!-- Offer Types -->
     <section class="mb-5">
       <h2>Select Promotional Offer</h2>
-      <div class="voucher-grid">
-        <div class="voucher-card" data-offer="accessories">
-          <i class="fas fa-car-side voucher-icon"></i>
-          <p class="card-text fw-semibold mb-0">Accessories</p>
+      <div class="offer-selection">
+        <div class="voucher-grid">
+          <div class="voucher-card" data-offer="accessories">
+            <i class="fas fa-car-side voucher-icon"></i>
+            <p class="card-text fw-semibold mb-0">Accessories</p>
+          </div>
+          <div class="voucher-card" data-offer="finance">
+            <i class="fas fa-money-bill voucher-icon"></i>
+            <p class="card-text fw-semibold mb-0">Finance</p>
+          </div>
+          <div class="voucher-card" data-offer="carwash">
+            <i class="fas fa-soap voucher-icon"></i>
+            <p class="card-text fw-semibold mb-0">Car Wash</p>
+          </div>
+          <div class="voucher-card" data-offer="servicing">
+            <i class="fas fa-wrench voucher-icon"></i>
+            <p class="card-text fw-semibold mb-0">Servicing</p>
+          </div>
         </div>
-        <div class="voucher-card" data-offer="finance">
-          <i class="fas fa-money-bill voucher-icon"></i>
-          <p class="card-text fw-semibold mb-0">Finance</p>
-        </div>
-        <div class="voucher-card" data-offer="carwash">
-          <i class="fas fa-soap voucher-icon"></i>
-          <p class="card-text fw-semibold mb-0">Car Wash</p>
-        </div>
-        <div class="voucher-card" data-offer="servicing">
-          <i class="fas fa-wrench voucher-icon"></i>
-          <p class="card-text fw-semibold mb-0">Servicing</p>
-        </div>
-        <div class="voucher-card" data-offer="custom">
-          <i class="fas fa-star voucher-icon"></i>
-          <p class="card-text fw-semibold mb-0">Create Offer</p>
-        </div>
+        <button id="createOfferButton" class="create-offer-btn" disabled>Create Offer</button>
       </div>
-      <p class="text-muted mt-3">Click an offer to select it for promotion</p>
+      <p class="text-muted mt-3">Click an offer to select it, then click 'Create Offer' to proceed</p>
     </section>
 
     <!-- Form -->
-    <section class="form-container">
+    <section class="form-container" id="offerForm">
       <div class="row">
         <!-- Left Column: Form Fields -->
         <div class="col-md-6">
@@ -734,6 +769,8 @@
     const previewDelivery = document.getElementById('previewDelivery');
     const previewButton = document.getElementById('previewButton');
     const sendButton = document.getElementById('sendButton');
+    const createOfferButton = document.getElementById('createOfferButton');
+    const offerForm = document.getElementById('offerForm');
     const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
     const modalContent = document.getElementById('modalContent');
 
@@ -743,8 +780,22 @@
         voucherCards.forEach(c => c.classList.remove('selected'));
         card.classList.add('selected');
         offerTypeInput.value = card.getAttribute('data-offer');
+        createOfferButton.disabled = false;
         updatePreview();
       });
+    });
+
+    // Create Offer button click event
+    createOfferButton.addEventListener('click', () => {
+      if (!createOfferButton.disabled) {
+        offerForm.style.display = 'block';
+        // Clear message fields
+        messageInput.value = '';
+        otherWordingInput.value = '';
+        updateCharCount(messageInput, smsCharCount);
+        updateCharCount(otherWordingInput, emailCharCount);
+        updatePreview();
+      }
     });
 
     // Toggle delivery option selection
@@ -771,28 +822,31 @@
       updatePreview();
     });
 
-    // Update character count for SMS
-    messageInput.addEventListener('input', () => {
-      const length = messageInput.value.length;
-      smsCharCount.textContent = `${length}/160 characters`;
+    // Update character count for inputs
+    function updateCharCount(input, charCountElement) {
+      const length = input.value.length;
+      charCountElement.textContent = `${length}/160 characters`;
       
       if (length > 140) {
-        smsCharCount.classList.add('warning');
-        smsCharCount.classList.remove('danger');
+        charCountElement.classList.add('warning');
+        charCountElement.classList.remove('danger');
       } else if (length > 155) {
-        smsCharCount.classList.remove('warning');
-        smsCharCount.classList.add('danger');
+        charCountElement.classList.remove('warning');
+        charCountElement.classList.add('danger');
       } else {
-        smsCharCount.classList.remove('warning', 'danger');
+        charCountElement.classList.remove('warning', 'danger');
       }
-      
+    }
+
+    // Update character count for SMS
+    messageInput.addEventListener('input', () => {
+      updateCharCount(messageInput, smsCharCount);
       updatePreview();
     });
 
     // Update character count for email
     otherWordingInput.addEventListener('input', () => {
-      const length = otherWordingInput.value.length;
-      emailCharCount.textContent = `${length}/160 characters`;
+      updateCharCount(otherWordingInput, emailCharCount);
       updatePreview();
     });
 
